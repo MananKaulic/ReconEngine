@@ -1,0 +1,4 @@
+trade_id,account,internal_security_id,side,quantity,trade_date,expected_settlement_date,status
+T0001,ACC-EQ-01,SEC0009,BUY,200.0,2026-09-17,2026-09-19,unsettled
+T0002,ACC-EQ-01,SEC0035,BUY,150.0,2026-09-17,2026-09-20,unsettled
+T0003,ACC-EQ-01,SEC0048,BUY,100.0,2026-09-18,2026-09-18,settled

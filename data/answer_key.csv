@@ -1,0 +1,17 @@
+account,internal_security_id,expected_reason_code,scenario
+ACC-EQ-01,SEC0024,MATCHED,rounding_inside_tolerance
+ACC-EQ-01,SEC0058,DUPLICATE,duplicate_custodian_rows
+ACC-EQ-01,SEC0015,CCY_MISMATCH,currency_mismatch
+ACC-EQ-01,(unmapped),SETUP,unmapped_custodian_code
+ACC-EQ-01,SEC9001,SETUP,inactive_security
+ACC-EQ-01,SEC9002/SEC9003,SETUP,ambiguous_custodian_mapping
+ACC-FI-01,SEC0001,MATCHED,unit_multiplier_face_value_vs_units
+ACC-EQ-01,SEC0049,CORP,split_processed_one_side
+ACC-EQ-01,SEC0009,TIMING,pending_settlement_explains_gap
+ACC-EQ-01,SEC0057,PRICE,price_only_difference
+ACC-EQ-01,SEC0044,MISSING_CUSTODIAN,missing_on_custodian_side
+ACC-EQ-01,SEC0037,MISSING_INTERNAL,missing_on_internal_side
+ACC-EQ-01,SEC0035,TIMING,timing_only_with_evidence
+ACC-EQ-01,SEC0048,TRADE,recent_booking_error
+ACC-EQ-01,SEC0060,UNEXPLAINED,genuinely_unexplained
+ACC-EQ-01,SEC0039,UNEXPLAINED,genuinely_unexplained

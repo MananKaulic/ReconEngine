@@ -1,0 +1,81 @@
+# ============================================================================
+# config/tolerances.yaml
+#
+# ALL thresholds in this file are ILLUSTRATIVE ASSUMPTIONS made for this
+# prototype. They are NOT industry standards, NOT sourced from any real
+# custodian/fund SLA, and should be treated as "made up but reasonable
+# numbers a BA could defend and tune with a client." Every number the
+# engine uses to decide MATCH vs BREAK, or to prioritise a break, is read
+# from this file -- nothing is hard-coded in the engine.
+#
+# Currency: Indian Rupees (INR). AUM is also illustrative.
+# ============================================================================
+
+aum_inr: 500_00_00_000          # Rs. 500 crore assumed fund AUM (illustrative)
+
+# ----------------------------------------------------------------------------
+# Per-asset-class tolerances. A pair "matches" only if BOTH the quantity gap
+# AND the value gap are within tolerance (either one alone being small is not
+# enough, since a large quantity gap can hide behind a small value gap on a
+# cheap security, and vice versa).
+# ----------------------------------------------------------------------------
+asset_class_tolerances:
+  Equity:
+    quantity_abs: 1            # shares
+    value_abs_inr: 500
+  FixedIncome:
+    quantity_abs: 1000         # face value units
+    value_abs_inr: 2500
+  MoneyMarket:
+    quantity_abs: 100
+    value_abs_inr: 1000
+  Derivative:
+    quantity_abs: 0.1          # contracts
+    value_abs_inr: 5000
+
+# Price tolerance, expressed as a percentage of the internal book's price.
+# Used by the PRICE reason code: quantity agrees but price differs.
+price_tolerance_pct: 0.5
+
+# ----------------------------------------------------------------------------
+# Materiality tiers, keyed on ABSOLUTE value impact of the break (INR).
+# SLA is expressed in business days by which the break must be resolved.
+# ----------------------------------------------------------------------------
+materiality_tiers:
+  - name: SAME_DAY
+    min_value_inr: 20_00_000       # > Rs 20,00,000 (20 lakh)
+    sla_business_days: 0
+  - name: NEXT_DAY
+    min_value_inr: 1_00_000        # Rs 1,00,000 - 20,00,000 (1 lakh - 20 lakh)
+    sla_business_days: 1
+  - name: ROUTINE
+    min_value_inr: 0                # < Rs 1,00,000
+    sla_business_days: 3
+
+# ----------------------------------------------------------------------------
+# Escalation rules
+# ----------------------------------------------------------------------------
+escalation:
+  single_break_value_inr: 40_00_000   # a single break above this -> senior ops
+  net_exposure_pct_of_aum: 0.1        # net signed exposure diff > 0.1% of AUM -> PM
+
+# ----------------------------------------------------------------------------
+# Settlement cycle (business days) per asset class, used to interpret
+# pending_trades.csv expected_settlement_date and for the TIMING rule.
+# ----------------------------------------------------------------------------
+settlement_cycle_business_days:
+  Equity: 1          # T+1 for Indian equities (default assumption)
+  FixedIncome: 1
+  MoneyMarket: 1
+  Derivative: 1
+
+# ----------------------------------------------------------------------------
+# File validation controls
+# ----------------------------------------------------------------------------
+validation:
+  expected_position_count_deviation_pct: 5   # +/- 5% vs an optional expected count
+  recent_days_for_booking_error: 3            # lookback window for the TRADE rule
+
+# Optional holiday calendar (business-day maths for SLA/settlement).
+# Empty by default; add ISO dates (YYYY-MM-DD) as needed, e.g. NSE holidays.
+holiday_calendar: []

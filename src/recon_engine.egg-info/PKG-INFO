@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: recon-engine
+Version: 0.1.0
+Summary: Prototype rule-based position reconciliation engine (custodian vs internal books)
+Requires-Python: >=3.10
+Requires-Dist: pandas>=2.0
+Requires-Dist: numpy>=1.24
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: xlsxwriter>=3.0
